@@ -47,6 +47,12 @@ while [ $# -gt 0 ]; do
 
             ;;
 
+	--keyserver)
+	    keyserver_url="$2"
+	    shift
+
+	    ;;
+
         -*|--*)
             usage
 
