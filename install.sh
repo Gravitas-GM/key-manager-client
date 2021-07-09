@@ -70,7 +70,7 @@ fetch_keys_script_path="/opt/sentinel/fetch_keys.sh"
 if [ $describe -gt 0 ]; then
     echo "Creating ${fetch_keys_script_path}"
 else
-    mkdir -p /opt/sentinel
+    mkdir -p "$(dirname "$fetch_keys_script_path")"
 
     echo '#!/usr/bin/env sh
 
@@ -79,9 +79,9 @@ if [ "$1" != "'"$1"'" ]; then
     exit 0
 fi
 
-curl -s https://sentinel.gravityadmin.com/authorized_keys' > /opt/sentinel/fetch_keys.sh
+curl -s https://sentinel.gravityadmin.com/authorized_keys' > "$fetch_keys_script_path"
 
-    chmod 755 /opt/sentinel/fetch_keys.sh
+    chmod 755 "$fetch_keys_script_path"
 fi
 
 sshd_config_path="/etc/ssh/sshd_config"
