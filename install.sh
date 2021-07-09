@@ -3,6 +3,8 @@
 err_generic=1
 err_missing_file=3
 
+keyserver_url="https://sentinel.gravityadmin.com/authorized_keys"
+
 usage() {
     echo "$0 [options] <ssh_user>"
     echo
@@ -16,6 +18,10 @@ usage() {
     echo
     echo "    --describe"
     echo "         Do not actually change any system settings, only describe which actions would be taken."
+    echo
+    echo "    --keyserver <url>"
+    echo "       The HTTP or HTTPS URL that should be used as the authorized keys source."
+    echo "       Default: ${keyserver_url}"
     echo
     echo "Exit Codes:"
     echo "    1  - Something unexpected happend (e.g. incorrect command arguments)"
@@ -79,7 +85,7 @@ if [ "$1" != "'$1'" ]; then
     exit 0
 fi
 
-curl -s https://sentinel.gravityadmin.com/authorized_keys' > "$fetch_keys_script_path"
+curl -s "'$keyserver_url'"' > "$fetch_keys_script_path"
 
     chmod 755 "$fetch_keys_script_path"
 fi
