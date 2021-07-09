@@ -75,7 +75,7 @@ else
     echo '#!/usr/bin/env sh
 
 # Only the user that was configured to have SSH access is allowed to retrieve SSH keys
-if [ "$1" != "'"$1"'" ]; then
+if [ "$1" != "'$1'" ]; then
     exit 0
 fi
 
