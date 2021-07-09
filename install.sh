@@ -14,10 +14,10 @@ usage() {
     echo
     echo "Options:"
     echo "    -h, --help"
-    echo "         Display this help text."
+    echo "        Display this help text."
     echo
     echo "    --describe"
-    echo "         Do not actually change any system settings, only describe which actions would be taken."
+    echo "        Do not actually change any system settings, only describe which actions would be taken."
     echo
     echo "    --keyserver <url>"
     echo "       The HTTP or HTTPS URL that should be used as the authorized keys source."
