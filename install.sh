@@ -150,7 +150,8 @@ else
 fi
 
 echo "done"
-echo "Reloading sshd ... "
+
+echo -n "Reloading sshd ... "
 
 if command -v systemctl >/dev/null; then
     systemctl reload sshd
