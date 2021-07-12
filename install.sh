@@ -84,6 +84,8 @@ fetch_keys_script_path="/opt/sentinel/fetch_keys.sh"
 if [ $describe -gt 0 ]; then
     echo "Creating ${fetch_keys_script_path}"
 else
+    echo -n "Generating authorized keys retrieval script ... "
+
     mkdir -p "$(dirname "$fetch_keys_script_path")"
 
     echo '#!/usr/bin/env sh
@@ -96,6 +98,8 @@ fi
 curl -s "'$keyserver_url'"' > "$fetch_keys_script_path"
 
     chmod 755 "$fetch_keys_script_path"
+
+    echo "done"
 fi
 
 sshd_config_path="/etc/ssh/sshd_config"
@@ -112,8 +116,12 @@ if [ -f "$sshd_config_path" ]; then
         echo $sshd_authorized_keys_command_value
         echo $sshd_authorized_keys_command_user_value
     else
+        echo -n "Updating $sshd_config_path ... "
+
         sed -i "s|^#\{0,1\}\w*AuthorizedKeysCommand .*|${sshd_authorized_keys_command_value}|" "${sshd_config_path}"
         sed -i "s|^#\{0,1\}\w*AuthorizedKeysCommandUser .*|${sshd_authorized_keys_command_user_value}|" "${sshd_config_path}"
+
+	echo "done"
     fi
 else
     echo "ERROR: Could not determine patch to sshd_config"
@@ -133,14 +141,21 @@ if ! sshd -t; then
     exit $err_config_test_failed
 fi
 
+echo -n "Removing ec2-instance-connect package (if it is installed) ... "
+
 if command -v apt-get >/dev/null; then
     apt-get remove -y -qq ec2-instance-connect
 else
     yum remove -yq ec2-instance-connect
 fi
 
+echo "done"
+echo "Reloading sshd ... "
+
 if command -v systemctl >/dev/null; then
     systemctl reload sshd
 else
     service sshd reload
 fi
+
+echo "done"
