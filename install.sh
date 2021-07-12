@@ -104,14 +104,14 @@ if [ -f "$sshd_config_path" ]; then
     if [ $describe -gt 0 ]; then
         echo "Updating AuthorizedKeysCommand and AuthorizedKeysCommandUser in ${sshd_config_path}"
         echo "===== OLD ====="
-        echo "$(grep -P "AuthorizedKeysCommand(User)?" "$sshd_config_path")"
+        echo "$(grep -P "AuthorizedKeysCommand(User)? " "$sshd_config_path")"
         echo
         echo "===== NEW ====="
         echo $sshd_authorized_keys_command_value
         echo $sshd_authorized_keys_command_user_value
     else
-        sed -i "s|^#\{0,1\}\w*AuthorizedKeysCommand.*|${sshd_authorized_keys_command_value}|" "${sshd_config_path}"
-        sed -i "s|^#\{0,1\}\w*AuthorizedKeysCommandUser.*|${sshd_authorized_keys_command_user_value}|" "${sshd_config_path}"
+        sed -i "s|^#\{0,1\}\w*AuthorizedKeysCommand .*|${sshd_authorized_keys_command_value}|" "${sshd_config_path}"
+        sed -i "s|^#\{0,1\}\w*AuthorizedKeysCommandUser .*|${sshd_authorized_keys_command_user_value}|" "${sshd_config_path}"
     fi
 else
     echo "ERROR: Could not determine patch to sshd_config"
