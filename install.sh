@@ -134,9 +134,9 @@ if ! sshd -t; then
 fi
 
 if command -v apt-get >/dev/null; then
-    apt-get remove -y ec2-instance-connect
+    apt-get remove -y -qq ec2-instance-connect
 else
-    yum remove -y ec2-instance-connect
+    yum remove -yq ec2-instance-connect
 fi
 
 if command -v systemctl >/dev/null; then
