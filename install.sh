@@ -146,7 +146,7 @@ echo -n "Removing ec2-instance-connect package (if it is installed) ... "
 if command -v apt-get >/dev/null; then
     apt-get remove -y -qq ec2-instance-connect
 else
-    yum remove -yq ec2-instance-connect
+    yum remove -y -q ec2-instance-connect
 fi
 
 echo "done"
