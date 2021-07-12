@@ -121,6 +121,11 @@ else
     exit $err_missing_file
 fi
 
+# Stop execution here, since the rest of the script only needs to be run after we've actually changed things.
+if [ $describe -gt 0 ]; then
+    exit 0
+fi
+
 if ! sshd -t; then
     echo "sshd -t exited with a non-zero exit code, indicating a problem with the new configuration. You will"
     echo "need to review it and fix any issues."
