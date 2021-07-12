@@ -133,7 +133,14 @@ if ! sshd -t; then
     exit $err_config_test_failed
 fi
 
-if [ $describe -eq 0 ]; then
+if command -v apt-get >/dev/null; then
     apt-get remove -y ec2-instance-connect
+else
+    yum remove -y ec2-instance-connect
+fi
+
+if command -v systemctl >/dev/null; then
     systemctl reload sshd
+else
+    service sshd reload
 fi
