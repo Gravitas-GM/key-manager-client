@@ -2,6 +2,7 @@
 
 err_generic=1
 err_missing_file=3
+err_config_test_failed=4
 
 keyserver_url="https://sentinel.gravityadmin.com/authorized_keys"
 
@@ -26,6 +27,7 @@ usage() {
     echo "Exit Codes:"
     echo "    1  - Something unexpected happend (e.g. incorrect command arguments)"
     echo "    3  - A configuration this script normally touches could not be accessed"
+    echo "    4  - A config test (e.g. sshd -t) exited with a non-zero status code"
 }
 
 describe=0
@@ -122,6 +124,8 @@ fi
 if ! sshd -t; then
     echo "sshd -t exited with a non-zero exit code, indicating a problem with the new configuration. You will"
     echo "need to review it and fix any issues."
+
+    exit $err_config_test_failed
 fi
 
 if [ $describe -eq 0 ]; then
